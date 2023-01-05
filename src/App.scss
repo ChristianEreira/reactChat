@@ -1,0 +1,532 @@
+$main-background: #f3f3f3;
+$elem-background: #e5e5e5;
+$text-color: #333333;
+$faded-color: #414141;
+$box-background: #ffffff;
+$msg-blue: #0076e2;
+$username: #636262;
+
+$red: #660000;
+$yellow: #665c00;
+$green: #006610;
+$cyan: #006666;
+$blue: #020066;
+
+html,
+body,
+.App {
+  background: $main-background;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  color: $text-color;
+  font-size: 14px;
+}
+
+.box {
+  background: $box-background;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
+  margin: 16px;
+}
+
+.spaceX {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.centerX {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.centerY {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#content {
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+
+  span {
+    font-weight: 400;
+  }
+}
+
+input,
+textarea,
+button {
+  font-family: "Open Sans", sans-serif;
+  outline: none;
+
+  &::placeholder {
+    color: $faded-color;
+  }
+}
+
+input[type="text"],
+textarea,
+button {
+  border: none;
+  background: $elem-background;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 14px;
+  color: $text-color;
+}
+
+.search {
+  input[type="text"] {
+    padding-left: 40px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .fa-search {
+    margin: 8px 0 0 16px;
+    position: absolute;
+    pointer-events: none;
+  }
+}
+
+#usersBox {
+  display: flex;
+  flex-direction: column;
+}
+
+#usersList {
+  overflow-y: auto;
+  margin-top: 16px;
+}
+
+.emptyMessage {
+  width: 100%;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.userButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  margin: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .userDesc {
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+
+    p {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(100% - 16px);
+    }
+  }
+
+  &.noIcon {
+    justify-content: flex-start;
+  }
+
+  &:not(.noIcon):first-of-type {
+    margin: 0 0 8px 0;
+    padding: 0 0 8px 0;
+  }
+
+  p,
+  .fa-comment-alt {
+    margin: 0 0 0 16px;
+  }
+
+  i {
+    font-size: 24px;
+  }
+
+  &.hover {
+    padding: 8px;
+
+    &:hover {
+      background: $elem-background;
+    }
+  }
+
+  &.selected {
+    background: $elem-background;
+    cursor: default;
+  }
+}
+
+.seperator {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $elem-background;
+  margin: 0;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: $box-background;
+  font-weight: 700;
+  font-size: 0;
+  flex-shrink: 0;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block !important;
+  line-height: 48px;
+  position: relative;
+
+  i {
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.small {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    &:first-letter {
+      font-size: 18px !important;
+    }
+  }
+
+  &:first-letter {
+    font-size: 24px !important;
+  }
+}
+
+.red {
+  background: $red;
+}
+
+.yellow {
+  background: $yellow;
+}
+
+.green {
+  background: $green;
+}
+
+.cyan {
+  background: $cyan;
+}
+
+.blue {
+  background: $blue;
+}
+
+.grey {
+  background: $text-color;
+}
+
+#optionsBox {
+  padding: 16px 32px;
+  .userButton {
+    margin: 0;
+    padding: 0;
+    cursor: default;
+
+    p {
+      cursor: text;
+    }
+  }
+  .userDesc {
+    overflow: visible;
+  }
+}
+
+#messagesBox {
+  flex: 1;
+}
+
+#messagesMenu {
+  width: 240px;
+  border-right: 1px solid $elem-background;
+  padding-right: 16px;
+}
+
+#chatPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 380px;
+  height: 488px;
+}
+
+#chatBottom {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  margin-left: 16px;
+}
+
+#messages {
+  padding-top: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#infoBar {
+  display: flex;
+  padding: 8px 16px;
+  border-bottom: 1px solid $elem-background;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin: 0 0 0 16px;
+    }
+  }
+
+  i {
+    font-size: 21px;
+    cursor: pointer;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.colorSelectList {
+  display: flex;
+  margin-left: 16px;
+
+  .colorSelect {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin: 0 4px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    &.selected {
+      width: 24px;
+      height: 24px;
+      margin: 0 1px;
+      cursor: default;
+
+      &:last-child {
+        margin-right: -3px;
+      }
+
+      &:first-child {
+        margin-left: -3px;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+#msgInput {
+  margin-top: 8px;
+}
+
+#charCount {
+  margin: 8px 0 0 0;
+
+  &.full {
+    color: $red;
+    font-weight: bold;
+  }
+}
+
+#msgBox {
+  flex: 1;
+  padding: 16px;
+  height: 64px;
+  box-sizing: border-box;
+  resize: none;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+#sendBtn {
+  margin-left: 8px;
+  width: 64px;
+  height: 64px;
+
+  i {
+    font-size: 24px;
+    color: $msg-blue;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: #cfcfcf;
+  }
+}
+
+.leftMsg,
+.rightMsg {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.leftMsg {
+  display: flex;
+
+  .msgBody {
+    margin-left: 8px;
+  }
+
+  .msgText {
+    background: $elem-background;
+    border-radius: 0 17.5px 17.5px 17.5px;
+  }
+}
+
+.rightMsg {
+  display: flex;
+  justify-content: flex-end;
+
+  .msgBody {
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .avatar {
+    order: 1;
+  }
+
+  .msgText {
+    background: $msg-blue;
+    color: $box-background;
+    border-radius: 17.5px 0 17.5px 17.5px;
+  }
+}
+
+.msgName {
+  color: $username;
+  cursor: pointer;
+}
+
+.msgText {
+  padding: 8px 16px;
+  display: table;
+  max-width: 256px;
+  overflow-wrap: anywhere;
+
+  &:not(:first-child) {
+    margin-top: 4px;
+  }
+}
+
+.popupBack {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(133, 133, 133, 0.75);
+  z-index: 1000;
+}
+
+#nicknamePopupBox {
+  width: 300px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+#nickInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 16px;
+}
+
+.inputError {
+  border: 1px solid $red !important;
+}
+
+#nickError {
+  margin: 4px 0 16px 0;
+  color: $red;
+}
+
+.button {
+  padding: 8px 16px;
+  margin-right: 8px;
+
+  &.primary {
+    background: $msg-blue;
+    color: $box-background;
+
+    &:hover {
+      background: #0065c4;
+    }
+  }
+
+  &.secondary {
+    background: $box-background;
+    color: $msg-blue;
+    border: 1px solid $msg-blue;
+
+    &:hover {
+      color: $red;
+      border-color: $red;
+    }
+  }
+}
