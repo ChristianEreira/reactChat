@@ -231,17 +231,23 @@ button {
   font-size: 24px;
 }
 
-.userButton.hover {
+.userButton.hoverable {
   padding: 8px;
 }
 
-.userButton.hover:hover {
+.userButton.hoverable:hover {
   background: #e5e5e5;
 }
 
 .userButton.selected {
   background: #e5e5e5;
   cursor: default;
+}
+
+.imitateLink {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
 
 .seperator {
@@ -267,7 +273,7 @@ button {
   position: relative;
 }
 
-.avatar i {
+.avatar svg {
   font-size: 20px;
   position: absolute;
   left: 50%;

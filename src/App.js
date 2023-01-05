@@ -1,11 +1,51 @@
 import './App.css';
+// import { useState } from 'react';
+// import SearchBar from './Components/SearchBar';
+import AvatarColourPicker from './Components/AvatarColourPicker';
+import UserPanel from './Components/Panels/UserPanel';
+import MessagesPanel from './Components/Panels/MessagesPanel';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-        <p>Hello world!</p>
+      <div className="center" id="content">
+        <div className="centerX">
+
+          <div className="box" id="usersBox">
+            <UserPanel />
+          </div>
+
+          <div className="centerY">
+            <div className="box" id="optionsBox">
+              <div className="spaceX">
+                <div className="userButton noIcon">
+                  {/* TODO: Replace ... with username */}
+                  <div className="avatar yellow">...</div>
+                  <div className="userDesc">
+                    <p><b>Nickname:</b></p>
+                    {/* TODO: Replace ... with username */}
+                    {/* TODO: Open nick popup on click */}
+                    <p>... <span className="imitateLink">(change)</span></p>
+                  </div>
+                </div>
+
+                {/* TODO: Replace selected */}
+                <AvatarColourPicker selected="yellow"/>
+              </div>
+            </div>
+
+            <div className="box" id="messagesBox">
+              <div className="centerX">
+                <MessagesPanel />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
