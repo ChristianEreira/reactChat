@@ -505,7 +505,7 @@ button {
   height: 64px;
 }
 
-#sendBtn i {
+#sendBtn svg {
   font-size: 24px;
   color: #0076e2;
 }
