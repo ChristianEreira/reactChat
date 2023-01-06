@@ -6,6 +6,7 @@ import UserButton from './Components/UserButton';
 import UserPanel from './Components/Panels/UserPanel';
 import MessagesPanel from './Components/Panels/MessagesPanel';
 import ChatPanel from './Components/Panels/ChatPanel';
+import Popup from './Components/Popup';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -40,6 +41,10 @@ const App = () => {
           </div>
         </div>
       </div>
+
+      <Popup isOpen={true} title="Connecting...">
+        <p>Connecting to the server...</p>
+      </Popup>
     </div>
   );
 };
