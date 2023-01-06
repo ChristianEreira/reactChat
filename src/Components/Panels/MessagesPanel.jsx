@@ -13,7 +13,7 @@ const MessagesPanel = () => {
             <h1>Messages</h1>
             <SearchBar setSearchTerm={setSearchTerm} />
             {searchTerm}
-            <UserButton avatarColor="grey" avatarContent=<FontAwesomeIcon icon={solid('users')} /> title="Global chat" subtext="Chat with all users" selected={true} hoverable={true} />
+            <UserButton avatarColor="grey" avatarContent={<FontAwesomeIcon icon={solid('users')} />} title="Global chat" subtext="Chat with all users" selected={true} hoverable={true} />
             <hr className="seperator" />
             <div id="messagesList">
                 <p className="emptyMessage"><i>Click on a user to start a chat</i></p>
