@@ -1,5 +1,3 @@
-import React from "react";
-
 const AvatarColourPicker = ({selected}) => {
     const colours = ["red", "yellow", "green", "cyan", "blue"];
 
