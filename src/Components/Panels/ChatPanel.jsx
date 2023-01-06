@@ -10,11 +10,11 @@ const ChatPanel = () => {
             {/* TODO: infoBar needs to be here */}
             <div id="chatBottom">
                 <div id="messages">
-                    <div className="emptyMessage"><i>There are no messages yet. Say hi!</i></div>
+                    <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p>
                     <p id="charCount">{currentCharacters}/300</p>
                     {/* TODO: onSubmit */}
-                    <form className="centerX" id="msgInput" onSubmit={() => {}}>
-                        <textarea name="msg" id="msgBox" placeholder="Type a message..." maxlength="300" onInput={(e) => {setCurrentCharacters(e.target.value.length)}}></textarea>
+                    <form className="centerX" id="msgInput" onSubmit={() => { }}>
+                        <textarea name="msg" id="msgBox" placeholder="Type a message..." maxLength="300" onInput={(e) => { setCurrentCharacters(e.target.value.length) }}></textarea>
                         <button type="submit" id="sendBtn"><FontAwesomeIcon icon={solid('paper-plane')} /></button>
                     </form>
                 </div>
