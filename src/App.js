@@ -2,8 +2,10 @@ import './App.css';
 // import { useState } from 'react';
 // import SearchBar from './Components/SearchBar';
 import AvatarColourPicker from './Components/AvatarColourPicker';
+import UserButton from './Components/UserButton';
 import UserPanel from './Components/Panels/UserPanel';
 import MessagesPanel from './Components/Panels/MessagesPanel';
+import ChatPanel from './Components/Panels/ChatPanel';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -39,6 +41,7 @@ const App = () => {
             <div className="box" id="messagesBox">
               <div className="centerX">
                 <MessagesPanel />
+                <ChatPanel />
               </div>
             </div>
           </div>
