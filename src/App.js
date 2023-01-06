@@ -22,19 +22,12 @@ const App = () => {
           <div className="centerY">
             <div className="box" id="optionsBox">
               <div className="spaceX">
-                <div className="userButton noIcon">
-                  {/* TODO: Replace ... with username */}
-                  <div className="avatar yellow">...</div>
-                  <div className="userDesc">
-                    <p><b>Nickname:</b></p>
-                    {/* TODO: Replace ... with username */}
-                    {/* TODO: Open nick popup on click */}
-                    <p>... <span className="imitateLink">(change)</span></p>
-                  </div>
-                </div>
+                {/* TODO: Replace ... with username */}
+                {/* TODO: Open nick popup on click */}
+                <UserButton avatarColor="yellow" avatarContent="..." title="Nickname:" subtext={<>... <span className="imitateLink">(change)</span></>} />
 
                 {/* TODO: Replace selected */}
-                <AvatarColourPicker selected="yellow"/>
+                <AvatarColourPicker selected="yellow" />
               </div>
             </div>
 
