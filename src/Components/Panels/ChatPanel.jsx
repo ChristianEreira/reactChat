@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ChatMessage from "../../ChatMessage";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -10,6 +11,7 @@ const ChatPanel = () => {
             {/* TODO: infoBar needs to be here */}
             <div id="chatBottom">
                 <div id="messages">
+                    <ChatMessage message={{msg: ["This is the first message!", "and this is the sencond"]}} />
                     <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p>
                 </div>
                 <p id="charCount">{currentCharacters}/300</p>
