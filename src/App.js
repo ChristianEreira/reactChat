@@ -1,16 +1,18 @@
 import './App.css';
-// import { useState } from 'react';
-// import SearchBar from './Components/SearchBar';
+import { useState } from 'react';
 import AvatarColourPicker from './Components/AvatarColourPicker';
 import UserButton from './Components/UserButton';
+import NicknamePicker from './Components/NicknamePicker';
+import Popup from './Components/Popup';
 import UserPanel from './Components/Panels/UserPanel';
 import MessagesPanel from './Components/Panels/MessagesPanel';
 import ChatPanel from './Components/Panels/ChatPanel';
-import Popup from './Components/Popup';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const App = () => {
+  const [popupsShown, setPopupsShown] = useState(["nickname"]);
+
   return (
     <div className="App">
       <div className="center" id="content">
@@ -42,7 +44,10 @@ const App = () => {
         </div>
       </div>
 
-      <Popup isOpen={true} title="Connecting...">
+      <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
+        <NicknamePicker closePopup={() => { setPopupsShown(popupsShown.filter(x => (x !== "nickname"))) }} />
+      </Popup>
+      <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
         <p>Connecting to the server...</p>
       </Popup>
     </div>
