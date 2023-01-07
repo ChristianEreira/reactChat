@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AvatarColourPicker from './Components/AvatarColourPicker';
 import UserButton from './Components/UserButton';
 import NicknamePicker from './Components/NicknamePicker';
@@ -7,11 +7,20 @@ import Popup from './Components/Popup';
 import UserPanel from './Components/Panels/UserPanel';
 import MessagesPanel from './Components/Panels/MessagesPanel';
 import ChatPanel from './Components/Panels/ChatPanel';
+import io from 'socket.io-client';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const App = () => {
   const [popupsShown, setPopupsShown] = useState(["nickname"]);
+
+  useEffect(() => {
+    const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+  }, []);
 
   return (
     <div className="App">
