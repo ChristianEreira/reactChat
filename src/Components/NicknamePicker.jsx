@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { sanitize } from '../helpers';
 
-const NicknamePicker = ({ closePopup }) => {
+const NicknamePicker = ({ closePopup, socket }) => {
     const [nickError, setNickError] = useState(null);
+    const [nickInput, setNickInput] = useState('');
 
     const checkNick = e => {
         let nick = e.target.value;
@@ -13,14 +15,21 @@ const NicknamePicker = ({ closePopup }) => {
             setNickError("Nickname must only use a-z and 0-9");
         } else {
             setNickError(null);
+            setNickInput(nick);
         }
+    };
+
+    const changeNickname = (e) => {
+        e.preventDefault();
+        socket.emit('set nickname', sanitize(nickInput));
+        return false;
     };
 
     return (
         <form>
             <input type="text" id="nickInput" className={nickError && "inputError"} placeholder="Nickname" onInput={checkNick} />
             <p id="nickError" className={!nickError && "invisible"}>{nickError}</p>
-            <button type="submit" className="button primary">Confirm</button>
+            <button type="submit" className="button primary" onClick={changeNickname}>Confirm</button>
             <button type="button" className="button secondary" onClick={closePopup}>Cancel</button>
         </form>
     );
