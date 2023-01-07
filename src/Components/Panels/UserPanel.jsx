@@ -8,14 +8,14 @@ const UserPanel = ({ nicks, socket }) => {
     let usersList;
     if (Object.keys(nicks).length === 0) {
         usersList = <p className="emptyMessage"><i>There are no online users</i></p>
-    } else if (searchTerm === '') {
-        usersList = Object.entries(nicks).map(([id, user]) => {
-            return (
-                <UserButton avatarColor={user.color} avatarContent={user.nick[0]} title={user.nick} key={id} />
-            )
-        })
     } else {
-        usersList = <p>{searchTerm}</p>
+        usersList = Object.entries(nicks).map(([id, user]) => {
+            if (id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return (
+                    <UserButton avatarColor={user.color} avatarContent={user.nick[0]} title={user.nick} key={id} />
+                )
+            }
+        })
     }
 
     return (
