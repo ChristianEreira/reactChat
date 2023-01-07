@@ -12,13 +12,19 @@ import io from 'socket.io-client';
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const App = () => {
-  const [popupsShown, setPopupsShown] = useState(["nickname"]);
+  const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
 
   useEffect(() => {
     const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
 
     socket.on("connect", () => {
       console.log("Connected to server");
+      setPopupsShown(popups => popups.filter(x => (x !== "connecting" && x !== "disconnected")));
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+      setPopupsShown(popups => [...popups, "disconnected"]);
     });
   }, []);
 
@@ -54,10 +60,13 @@ const App = () => {
       </div>
 
       <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
-        <NicknamePicker closePopup={() => { setPopupsShown(popupsShown.filter(x => (x !== "nickname"))) }} />
+        <NicknamePicker closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
       </Popup>
       <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
         <p>Connecting to the server...</p>
+      </Popup>
+      <Popup isOpen={popupsShown.includes("disconnected")} title="Disconnected" >
+        <p>Lost connection to server. Attempting to reconnect...</p>
       </Popup>
     </div>
   );
