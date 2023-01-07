@@ -13,7 +13,7 @@ const UserPanel = ({ nicks, socket }) => {
             if (id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return (
                     <>
-                        {i === 1 && <hr className="seperator"></hr>}
+                        {i !== 0 && <hr className="seperator"></hr>}
                         <UserButton avatarColor={user.color} avatarContent={user.nick[0]} title={user.nick} key={id} />
                     </>
                 )
@@ -24,7 +24,6 @@ const UserPanel = ({ nicks, socket }) => {
 
     return (
         <>
-            {/* TODO: Make ... dynamic */}
             <h1>Online Users <span>({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span></h1>
             <SearchBar setSearchTerm={setSearchTerm} />
             <div className="usersList">
