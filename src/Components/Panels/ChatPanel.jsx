@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChatMessage from "../../ChatMessage";
+import ChatMessage from "../ChatMessage";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
