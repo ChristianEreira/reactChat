@@ -70,7 +70,7 @@ const App = () => {
           <div className="centerY">
             <div className="box" id="optionsBox">
               <div className="spaceX">
-                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
+                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent={nicks[socket.id] ? nicks[socket.id].nick : "..."} title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
                 <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
               </div>
             </div>
