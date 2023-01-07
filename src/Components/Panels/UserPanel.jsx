@@ -2,7 +2,7 @@ import { useState } from 'react';
 import SearchBar from '../SearchBar';
 import UserButton from '../UserButton';
 
-const UserPanel = ({ nicks }) => {
+const UserPanel = ({ nicks, socket }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     let usersList;
@@ -21,7 +21,7 @@ const UserPanel = ({ nicks }) => {
     return (
         <>
             {/* TODO: Make ... dynamic */}
-            <h1>Online Users <span>(...)</span></h1>
+            <h1>Online Users <span>({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span></h1>
             <SearchBar setSearchTerm={setSearchTerm} />
             <div className="usersList">
                 {usersList}
