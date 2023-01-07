@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { sanitize } from '../helpers';
 
 const NicknamePicker = ({ closePopup, socket }) => {
@@ -25,10 +25,16 @@ const NicknamePicker = ({ closePopup, socket }) => {
         return false;
     };
 
+    useEffect(() => {
+        socket.on("nickname error", (error) => {
+            setNickError(error);
+        });
+    }, [socket]);
+
     return (
         <form>
-            <input type="text" id="nickInput" className={nickError && "inputError"} placeholder="Nickname" onInput={checkNick} />
-            <p id="nickError" className={!nickError && "invisible"}>{nickError}</p>
+            <input type="text" id="nickInput" className={nickError ? "inputError" : undefined} placeholder="Nickname" onInput={checkNick} />
+            <p id="nickError" className={!nickError ? "invisible" : undefined}>{nickError}</p>
             <button type="submit" className="button primary" onClick={changeNickname}>Confirm</button>
             <button type="button" className="button secondary" onClick={closePopup}>Cancel</button>
         </form>
