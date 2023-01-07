@@ -11,11 +11,15 @@ import io from 'socket.io-client';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
+const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
+
 const App = () => {
-  const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
+  const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);  
 
   useEffect(() => {
-    const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
+    socket.onAny((eventName, ...args) => {
+      console.log(eventName, args);
+    });
 
     socket.on("connect", () => {
       console.log("Connected to server");
@@ -60,7 +64,7 @@ const App = () => {
       </div>
 
       <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
-        <NicknamePicker closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
+        <NicknamePicker socket={socket} closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
       </Popup>
       <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
         <p>Connecting to the server...</p>
