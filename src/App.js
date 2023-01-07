@@ -40,6 +40,11 @@ const App = () => {
         setPopupsShown(popups => popups.filter(x => (x !== "nickname")));
       }
     });
+
+    socket.on("set color", (id, newColor) => {
+      let toSet = id in nicks ? { ...nicks[id], color: newColor } : { color: newColor };
+      setNicks(nicks => ({ ...nicks, [id]: toSet }));
+    });
   }, [nicks]);
 
   return (
@@ -56,10 +61,10 @@ const App = () => {
               <div className="spaceX">
                 {/* TODO: Replace ... with username */}
                 {/* TODO: Open nick popup on click */}
-                <UserButton avatarColor="yellow" avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink">(change)</span></>} />
+                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink">(change)</span></>} />
 
                 {/* TODO: Replace selected */}
-                <AvatarColourPicker selected="yellow" />
+                <AvatarColourPicker selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
               </div>
             </div>
 
