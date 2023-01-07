@@ -42,8 +42,7 @@ const App = () => {
     });
 
     socket.on("set nickname", (id, newNick) => {
-      let toSet = id in nicks ? { ...nicks[id], nick: newNick } : { nick: newNick};
-      setNicks(nicks => ({ ...nicks, [id]: toSet }));
+      setNicks(nicks => ({ ...nicks, [id]: id in nicks ? { ...nicks[id], nick: newNick } : { nick: newNick } }));
 
       if (id === socket.id) {
         closePopup("nickname");
@@ -51,14 +50,11 @@ const App = () => {
     });
 
     socket.on("set color", (id, newColor) => {
-      let toSet = id in nicks ? { ...nicks[id], color: newColor } : { color: newColor };
-      setNicks(nicks => ({ ...nicks, [id]: toSet }));
+      setNicks(nicks => ({ ...nicks, [id]: id in nicks ? { ...nicks[id], color: newColor } : { color: newColor } }));
     });
 
     socket.on("set nickname list", (nickList) => {
-      if (nicks[socket.id]) {
-        setNicks(nickList);
-      }
+      setNicks(nickList);
     });
   }, [nicks]);
 
@@ -68,13 +64,13 @@ const App = () => {
         <div className="centerX">
 
           <div className="box" id="usersBox">
-            <UserPanel />
+            <UserPanel nicks={nicks} />
           </div>
 
           <div className="centerY">
             <div className="box" id="optionsBox">
               <div className="spaceX">
-                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => {openPopup("nickname")}}>(change)</span></>} />
+                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
                 <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
               </div>
             </div>
