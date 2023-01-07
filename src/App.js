@@ -14,7 +14,8 @@ import io from 'socket.io-client';
 const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
 
 const App = () => {
-  const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);  
+  const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
+  const [nicks, setNicks] = useState({});
 
   useEffect(() => {
     socket.onAny((eventName, ...args) => {
@@ -30,7 +31,16 @@ const App = () => {
       console.log("Disconnected from server");
       setPopupsShown(popups => [...popups, "disconnected"]);
     });
-  }, []);
+
+    socket.on("set nickname", (id, newNick) => {
+      let toSet = id in nicks ? { ...nicks[id], nick: newNick } : { nick: newNick};
+      setNicks(nicks => ({ ...nicks, [id]: toSet }));
+
+      if (id === socket.id) {
+        setPopupsShown(popups => popups.filter(x => (x !== "nickname")));
+      }
+    });
+  }, [nicks]);
 
   return (
     <div className="App">
@@ -46,7 +56,7 @@ const App = () => {
               <div className="spaceX">
                 {/* TODO: Replace ... with username */}
                 {/* TODO: Open nick popup on click */}
-                <UserButton avatarColor="yellow" avatarContent="..." title="Nickname:" subtext={<>... <span className="imitateLink">(change)</span></>} />
+                <UserButton avatarColor="yellow" avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink">(change)</span></>} />
 
                 {/* TODO: Replace selected */}
                 <AvatarColourPicker selected="yellow" />
