@@ -45,6 +45,12 @@ const App = () => {
       let toSet = id in nicks ? { ...nicks[id], color: newColor } : { color: newColor };
       setNicks(nicks => ({ ...nicks, [id]: toSet }));
     });
+
+    socket.on("set nickname list", (nickList) => {
+      if (nicks[socket.id]) {
+        setNicks(nickList);
+      }
+    });
   }, [nicks]);
 
   return (
