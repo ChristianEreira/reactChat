@@ -74,11 +74,8 @@ const App = () => {
           <div className="centerY">
             <div className="box" id="optionsBox">
               <div className="spaceX">
-                {/* TODO: Open nick popup on click */}
                 <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => {openPopup("nickname")}}>(change)</span></>} />
-
-                {/* TODO: Change colour on click */}
-                <AvatarColourPicker selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
+                <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
               </div>
             </div>
 

@@ -1,4 +1,4 @@
-const AvatarColourPicker = ({selected}) => {
+const AvatarColourPicker = ({selected, socket}) => {
     const colours = ["red", "yellow", "green", "cyan", "blue"];
 
     return (
@@ -8,7 +8,7 @@ const AvatarColourPicker = ({selected}) => {
                 <div className="colorSelectList">
                     {colours.map((colour) => {
                         return (
-                            <div className={`colorSelect ${colour} ${colour === selected && "selected"}`} key={colour}></div>
+                            <div className={`colorSelect ${colour} ${colour === selected && "selected"}`} onClick={() => {socket.emit('set color', colour)}} key={colour}></div>
                         );
                     })}
                 </div>
