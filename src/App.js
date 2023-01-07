@@ -65,11 +65,10 @@ const App = () => {
           <div className="centerY">
             <div className="box" id="optionsBox">
               <div className="spaceX">
-                {/* TODO: Replace ... with username */}
                 {/* TODO: Open nick popup on click */}
                 <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink">(change)</span></>} />
 
-                {/* TODO: Replace selected */}
+                {/* TODO: Change colour on click */}
                 <AvatarColourPicker selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
               </div>
             </div>
@@ -85,7 +84,7 @@ const App = () => {
       </div>
 
       <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
-        <NicknamePicker socket={socket} closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
+        <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
       </Popup>
       <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
         <p>Connecting to the server...</p>
