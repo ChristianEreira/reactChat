@@ -202,6 +202,7 @@ button {
       -ms-flex-align: start;
           align-items: flex-start;
   overflow: hidden;
+  width: 100%;
 }
 
 .userButton .userDesc p {
