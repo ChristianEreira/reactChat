@@ -9,7 +9,8 @@ const UserPanel = ({ nicks, socket }) => {
     if (Object.keys(nicks).length === 0) {
         usersList = <p className="emptyMessage"><i>There are no online users</i></p>
     } else {
-        usersList = Object.entries(nicks).map(([id, user], i) => {
+        let filteredUsers = Object.entries(nicks).filter(([id, user]) => id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase()));
+        usersList = filteredUsers.map(([id, user], i) => {
             if (id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return (
                     <>
