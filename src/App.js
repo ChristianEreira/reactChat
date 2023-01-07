@@ -17,6 +17,14 @@ const App = () => {
   const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
   const [nicks, setNicks] = useState({});
 
+  const openPopup = (popup) => {
+    setPopupsShown(popups => [...popups, popup]);
+  };
+
+  const closePopup = (popup) => {
+    setPopupsShown(popups => popups.filter(x => (x !== popup)));
+  };
+
   useEffect(() => {
     socket.onAny((eventName, ...args) => {
       console.log(eventName, args);
@@ -24,12 +32,13 @@ const App = () => {
 
     socket.on("connect", () => {
       console.log("Connected to server");
-      setPopupsShown(popups => popups.filter(x => (x !== "connecting" && x !== "disconnected")));
+      closePopup("connecting");
+      closePopup("disconnected");
     });
 
     socket.on("disconnect", () => {
       console.log("Disconnected from server");
-      setPopupsShown(popups => [...popups, "disconnected"]);
+      openPopup("disconnected");
     });
 
     socket.on("set nickname", (id, newNick) => {
@@ -37,7 +46,7 @@ const App = () => {
       setNicks(nicks => ({ ...nicks, [id]: toSet }));
 
       if (id === socket.id) {
-        setPopupsShown(popups => popups.filter(x => (x !== "nickname")));
+        closePopup("nickname");
       }
     });
 
@@ -66,7 +75,7 @@ const App = () => {
             <div className="box" id="optionsBox">
               <div className="spaceX">
                 {/* TODO: Open nick popup on click */}
-                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink">(change)</span></>} />
+                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent="..." title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" >(change)</span></>} />
 
                 {/* TODO: Change colour on click */}
                 <AvatarColourPicker selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
@@ -84,7 +93,7 @@ const App = () => {
       </div>
 
       <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
-        <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { setPopupsShown(popups => popups.filter(x => (x !== "nickname"))) }} />
+        <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { closePopup("nickname") }} />
       </Popup>
       <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
         <p>Connecting to the server...</p>
