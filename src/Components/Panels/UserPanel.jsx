@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SearchBar from '../SearchBar';
 import UserButton from '../UserButton';
 
@@ -13,10 +13,10 @@ const UserPanel = ({ nicks, socket, openChat }) => {
         usersList = filteredUsers.map(([id, user], i) => {
             if (id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return (
-                    <>
+                    <React.Fragment key={id}>
                         {i !== 0 && <hr className="seperator"></hr>}
-                        <UserButton avatarColor={user.color} avatarContent={user.nick[0]} subtext={user.nick} icon userid={id} key={id} onClick={() => {openChat(id)}}/>
-                    </>
+                        <UserButton avatarColor={user.color} avatarContent={user.nick[0]} subtext={user.nick} icon userid={id} onClick={() => { openChat(id) }} />
+                    </React.Fragment>
                 )
             }
             return null;
