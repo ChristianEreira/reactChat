@@ -6,7 +6,7 @@ const UserPanel = ({ nicks, socket, openChat }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     let usersList;
-    if (Object.keys(nicks).length === 0) {
+    if (Object.keys(nicks).length <= 1) {
         usersList = <p className="emptyMessage"><i>There are no online users</i></p>
     } else {
         let filteredUsers = Object.entries(nicks).filter(([id, user]) => id !== socket.id && user.nick.toLowerCase().includes(searchTerm.toLowerCase()));
