@@ -11,7 +11,9 @@ const MessagesPanel = ({openChat, messages, nicks, activeChat}) => {
     if (Object.keys(messages).length > 1) {
         messagesList = Object.entries(messages).filter(([id, msgs]) => id !== "global").map(([id, msgs]) => {
             // TODO: Display last message
-            return <UserButton avatarColor={nicks[id].color} avatarContent={nicks[id].nick} title={nicks[id].nick} subtext="Chat with all users" selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
+            let nick = nicks[id] ? nicks[id].nick : <s>Disconnected</s>;
+            let color = nicks[id] ? nicks[id].color : "grey";
+            return <UserButton avatarColor={color} avatarContent={nick} title={nick} subtext="Chat with all users" selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
         });
     } else {
         messagesList = <p className="emptyMessage"><i>Click on a user to start a chat</i></p>;

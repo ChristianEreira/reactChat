@@ -67,6 +67,14 @@ const App = () => {
     socket.on("set nickname list", (nickList) => {
       setNicks(nickList);
     });
+
+    socket.on("user disconnect", (id) => {
+      setNicks(nicks => {
+        let newNicks = { ...nicks };
+        delete newNicks[id];
+        return newNicks;
+      });
+    });
   }, [nicks]);
 
   return (
