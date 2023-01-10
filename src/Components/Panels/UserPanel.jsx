@@ -2,7 +2,7 @@ import { useState } from 'react';
 import SearchBar from '../SearchBar';
 import UserButton from '../UserButton';
 
-const UserPanel = ({ nicks, socket }) => {
+const UserPanel = ({ nicks, socket, openChat }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     let usersList;
@@ -15,7 +15,7 @@ const UserPanel = ({ nicks, socket }) => {
                 return (
                     <>
                         {i !== 0 && <hr className="seperator"></hr>}
-                        <UserButton avatarColor={user.color} avatarContent={user.nick[0]} subtext={user.nick} icon key={id} />
+                        <UserButton avatarColor={user.color} avatarContent={user.nick[0]} subtext={user.nick} icon userid={id} key={id} onClick={() => {openChat(id)}}/>
                     </>
                 )
             }

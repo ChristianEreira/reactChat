@@ -16,6 +16,8 @@ const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade:
 const App = () => {
   const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
   const [nicks, setNicks] = useState({});
+  const [messages, setMessages] = useState({ global: [] });
+  const [activeChat, setActiveChat] = useState("global");
 
   const openPopup = (popup) => {
     setPopupsShown(popups => [...popups, popup]);
@@ -23,6 +25,15 @@ const App = () => {
 
   const closePopup = (popup) => {
     setPopupsShown(popups => popups.filter(x => (x !== popup)));
+  };
+
+  const openChat = (chat) => {
+    if (!(chat in messages)) {
+      setMessages(messages => ({ ...messages, [chat]: [] }));
+    }
+    // Else remove id from unread chats
+
+    setActiveChat(chat);
   };
 
   useEffect(() => {
@@ -64,7 +75,8 @@ const App = () => {
         <div className="centerX">
 
           <div className="box" id="usersBox">
-            <UserPanel nicks={nicks} socket={socket} />
+            <UserPanel nicks={nicks} socket={socket} openChat={openChat}/>
+            {activeChat}
           </div>
 
           <div className="centerY">
@@ -77,7 +89,7 @@ const App = () => {
 
             <div className="box" id="messagesBox">
               <div className="centerX">
-                <MessagesPanel />
+                <MessagesPanel openChat={openChat} />
                 <ChatPanel />
               </div>
             </div>

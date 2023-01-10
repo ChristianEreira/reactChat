@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-const UserButton = ({ userid, title, subtext, avatarColor, avatarContent, selected, hoverable, icon }) => {
-    if (userid) {
-        // TODO: Set variables based on userid
-    }
+const UserButton = ({ title, subtext, avatarColor, avatarContent, selected, hoverable, icon, onClick }) => {
     return (
-        <div className={`userButton ${!icon && "noIcon"} ${hoverable && "hoverable"} ${selected && "selected"}`}>
+        <div className={`userButton ${!icon && "noIcon"} ${hoverable && "hoverable"} ${selected && "selected"}`} onClick={onClick}>
             <div className={`avatar ${avatarColor}`}>
                 {avatarContent}
             </div>
