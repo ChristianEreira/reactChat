@@ -75,7 +75,7 @@ const App = () => {
         return newNicks;
       });
     });
-  }, [nicks]);
+  }, []);
 
   return (
     <div className="App">
