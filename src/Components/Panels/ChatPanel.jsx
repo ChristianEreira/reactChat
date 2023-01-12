@@ -1,17 +1,18 @@
 import { useState } from "react";
 import ChatMessage from "../ChatMessage";
+import InfoBar from "../InfoBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-const ChatPanel = () => {
+const ChatPanel = ({ nicks, activeChat }) => {
     const [currentCharacters, setCurrentCharacters] = useState(0);
 
     return (
         <div id="chatPanel">
-            {/* TODO: infoBar needs to be here */}
+            {activeChat !== "global" && <InfoBar title={nicks[activeChat].nick} avatarColor={nicks[activeChat].color} avatarContent={nicks[activeChat].nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> />}
             <div id="chatBottom">
                 <div id="messages">
-                    <ChatMessage message={{msg: ["This is the first message!", "and this is the sencond"]}} />
+                    <ChatMessage message={{ msg: ["This is the first message!", "and this is the sencond"] }} />
                     <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p>
                 </div>
                 <p id="charCount">{currentCharacters}/300</p>
