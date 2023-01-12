@@ -98,7 +98,7 @@ const App = () => {
             <div className="box" id="messagesBox">
               <div className="centerX">
                 <MessagesPanel openChat={openChat} messages={messages} nicks={nicks} activeChat={activeChat} />
-                <ChatPanel />
+                <ChatPanel nicks={nicks} activeChat={activeChat} />
               </div>
             </div>
           </div>
