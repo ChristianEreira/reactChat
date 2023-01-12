@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const InfoBar = (leftIcon, rightIcon, leftOnClick, rightOnClick, title, avatar) => {
+const InfoBar = ({leftIcon, rightIcon, leftOnClick, rightOnClick, title, avatar}) => {
     return (
         <div id="infoBar">
             <div>
