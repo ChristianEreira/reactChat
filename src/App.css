@@ -407,7 +407,7 @@ button {
           justify-content: space-between;
 }
 
-#infoBar .left {
+#infoBar .title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -416,7 +416,7 @@ button {
           align-items: center;
 }
 
-#infoBar .left p {
+#infoBar .title p {
   margin: 0 0 0 16px;
 }
 
