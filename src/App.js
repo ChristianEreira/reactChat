@@ -84,7 +84,6 @@ const App = () => {
 
           <div className="box" id="usersBox">
             <UserPanel nicks={nicks} socket={socket} openChat={openChat}/>
-            {activeChat}
           </div>
 
           <div className="centerY">
