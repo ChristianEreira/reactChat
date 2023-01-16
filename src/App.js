@@ -62,7 +62,7 @@ const App = () => {
     return {
       nick: id in nicks ? nicks[id].nick : <s>Disconnected</s>,
       color: id in nicks ? nicks[id].color : "grey",
-      disconnected: !(id in nicks)
+      disconnected: !(id in nicks || id === "global")
     };
   };
 
