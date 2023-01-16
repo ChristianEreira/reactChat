@@ -1,10 +1,9 @@
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, nick, color, own }) => {
     return (
-        // TODO: All needs to be made dynamic + only names if global chat, etc.
-        <div className="leftMsg">
-            <div className="avatar red small">randomName</div>
+        <div className={own ? "rightMsg" : "leftMsg"}>
+            <div className={`avatar ${color} small`}>{nick}</div>
             <div className="msgBody">
-                <div className="msgName">randomName</div>
+                <div className="msgName">{nick}</div>
                 {message.msg.map((msg, i) => {
                     return (
                         <div className="msgText" key={i}>{msg}</div>
