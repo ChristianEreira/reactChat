@@ -10,10 +10,8 @@ const MessagesPanel = ({openChat, messages, getUserInfo, activeChat, unreadChats
     let messagesList;
     if (Object.keys(messages).length > 1) {
         messagesList = Object.entries(messages).filter(([id, msgs]) => id !== "global" && getUserInfo(id).nick.toLowerCase().includes(searchTerm.toLowerCase())).map(([id, msgs]) => {
-
-            // TODO: Display last message
             let user = getUserInfo(id);
-            return <UserButton avatarColor={user.color} avatarContent={user.nick} title={user.nick} subtext="LAST MESSAGE HERE" unread={unreadChats.has(id)} selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
+            return <UserButton avatarColor={user.color} avatarContent={user.nick} title={user.nick} subtext={messages[id].length > 0 ? messages[id][messages[id].length - 1].msg[messages[id][messages[id].length - 1].msg.length - 1] : undefined} unread={unreadChats.has(id)} selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
         });
     } else {
         messagesList = <p className="emptyMessage"><i>Click on a user to start a chat</i></p>;
