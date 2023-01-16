@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-const UserButton = ({ title, subtext, avatarColor, avatarContent, selected, hoverable, icon, onClick }) => {
+const UserButton = ({ title, subtext, avatarColor, avatarContent, selected, hoverable, icon, onClick, unread }) => {
     return (
         <div className={`userButton ${!icon && "noIcon"} ${hoverable && "hoverable"} ${selected && "selected"}`} onClick={onClick}>
             <div className={`avatar ${avatarColor}`}>
@@ -9,7 +9,7 @@ const UserButton = ({ title, subtext, avatarColor, avatarContent, selected, hove
             </div>
             <div className="userDesc">
                 <p><b>{title}</b></p>
-                <p>{subtext}</p>
+                <p className={unread ? "bold" : undefined}>{subtext}</p>
             </div>
             {icon && <FontAwesomeIcon icon={solid("comment-alt")} />}
         </div>
