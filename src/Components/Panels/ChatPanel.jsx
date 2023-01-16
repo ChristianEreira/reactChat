@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { sanitize } from "../../helpers";
 
-const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage }) => {
+const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, deleteChat }) => {
     const [currentMessage, setCurrentMessage] = useState("");
 
     const handleSubmit = (e) => {
@@ -35,7 +35,7 @@ const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage }) =>
     let chatUser = getUserInfo(activeChat);
     return (
         <div id="chatPanel">
-            {activeChat !== "global" && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { alert(activeChat) }} />}
+            {activeChat !== "global" && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { deleteChat(activeChat) }} />}
             <div id="chatBottom">
                 <div id="messages">
                     {messagesList}

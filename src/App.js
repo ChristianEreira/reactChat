@@ -39,6 +39,12 @@ const App = () => {
     setActiveChat(chat);
   };
 
+  const deleteChat = (chat) => {
+    setMessages(messages => { let newMessages = { ...messages }; delete newMessages[chat]; return newMessages; });
+    setUnreadChats(unreadChats => new Set([...unreadChats].filter(x => (x !== chat))));
+    openChat("global");
+  };
+
   const addMessage = (chat, id, msg) => {
     setMessages(messages => {
       let newMessages = { ...messages };
@@ -162,7 +168,7 @@ const App = () => {
             <div className="box" id="messagesBox">
               <div className="centerX">
                 <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} />
-                <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} />
+                <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />
               </div>
             </div>
           </div>
