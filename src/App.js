@@ -19,6 +19,7 @@ const App = () => {
   const [messages, setMessages] = useState({ global: [] });
   const [activeChat, setActiveChat] = useState("global");
   const [unreadChats, setUnreadChats] = useState(new Set());
+  const [timedOutCount, setTimedOutCount] = useState(0);
 
   const openPopup = (popup) => {
     setPopupsShown(popups => [...popups, popup]);
@@ -40,22 +41,22 @@ const App = () => {
 
   const addMessage = (chat, id, msg) => {
     setMessages(messages => {
-        let newMessages = { ...messages };
+      let newMessages = { ...messages };
 
-        if (!(chat in newMessages)) {
-          newMessages[chat] = [];
-        }
+      if (!(chat in newMessages)) {
+        newMessages[chat] = [];
+      }
 
-        // Add to messages array if already exists
-        if (newMessages[chat].length > 0 && newMessages[chat][newMessages[chat].length - 1].id === id) {
-          newMessages[chat][newMessages[chat].length - 1].msg.push(msg);
-        } else {
-          newMessages[chat].push({ id: id, msg: [msg] });
-        }
+      // Add to messages array if already exists
+      if (newMessages[chat].length > 0 && newMessages[chat][newMessages[chat].length - 1].id === id) {
+        newMessages[chat][newMessages[chat].length - 1].msg.push(msg);
+      } else {
+        newMessages[chat].push({ id: id, msg: [msg] });
+      }
 
-        return newMessages;
-      });
-      console.log(messages);
+      return newMessages;
+    });
+    console.log(messages);
   };
 
   useEffect(() => {
@@ -104,7 +105,22 @@ const App = () => {
 
       setUnreadChats(unreadChats => new Set([...unreadChats, chat]));
     });
+
+    socket.on("timed out", () => {
+      setTimedOutCount(10);
+      openPopup("timed out");
+    });
   }, []);
+
+  useEffect(() => {
+    if (timedOutCount > 0) {
+      setTimeout(() => {
+        setTimedOutCount(timedOutCount => timedOutCount - 1);
+      }, 1000);
+    } else {
+      closePopup("timed out");
+    }
+  }, [timedOutCount]);
 
   return (
     <div className="App">
@@ -141,6 +157,10 @@ const App = () => {
       </Popup>
       <Popup isOpen={popupsShown.includes("disconnected")} title="Disconnected" >
         <p>Lost connection to server. Attempting to reconnect...</p>
+      </Popup>
+      <Popup isOpen={popupsShown.includes("timed out")} title="Timed Out" >
+        <p>Please stop typing so fast!</p>
+        <p>You can rejoin the chat in {timedOutCount} seconds.</p>
       </Popup>
     </div>
   );
