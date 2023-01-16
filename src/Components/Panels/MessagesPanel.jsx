@@ -4,16 +4,15 @@ import UserButton from "../UserButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
-const MessagesPanel = ({openChat, messages, nicks, activeChat}) => {
+const MessagesPanel = ({openChat, messages, getUserInfo, activeChat}) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     let messagesList;
     if (Object.keys(messages).length > 1) {
         messagesList = Object.entries(messages).filter(([id, msgs]) => id !== "global").map(([id, msgs]) => {
             // TODO: Display last message
-            let nick = nicks[id] ? nicks[id].nick : <s>Disconnected</s>;
-            let color = nicks[id] ? nicks[id].color : "grey";
-            return <UserButton avatarColor={color} avatarContent={nick} title={nick} subtext="Chat with all users" selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
+            let user = getUserInfo(id);
+            return <UserButton avatarColor={user.color} avatarContent={user.nick} title={user.nick} subtext="Chat with all users" selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
         });
     } else {
         messagesList = <p className="emptyMessage"><i>Click on a user to start a chat</i></p>;

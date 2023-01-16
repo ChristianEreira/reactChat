@@ -56,7 +56,14 @@ const App = () => {
 
       return newMessages;
     });
-    console.log(messages);
+  };
+  
+  const getUserInfo = (id) => {
+    return {
+      nick: id in nicks ? nicks[id].nick : <s>Disconnected</s>,
+      color: id in nicks ? nicks[id].color : "grey",
+      disconnected: !(id in nicks)
+    };
   };
 
   useEffect(() => {
@@ -68,6 +75,7 @@ const App = () => {
       console.log("Connected to server");
       closePopup("connecting");
       closePopup("disconnected");
+      openPopup("nickname");
     });
 
     socket.on("disconnect", () => {
@@ -141,8 +149,8 @@ const App = () => {
 
             <div className="box" id="messagesBox">
               <div className="centerX">
-                <MessagesPanel openChat={openChat} messages={messages} nicks={nicks} activeChat={activeChat} />
-                <ChatPanel nicks={nicks} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} />
+                <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} />
+                <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} />
               </div>
             </div>
           </div>
