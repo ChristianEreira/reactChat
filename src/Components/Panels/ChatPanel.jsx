@@ -31,7 +31,7 @@ const ChatPanel = ({ nicks, activeChat, socket, messages, addMessage }) => {
                 <div id="messages">
                     {messagesList}
                 </div>
-                <p id="charCount">{currentMessage.trim().length}/300</p>
+                <p id="charCount" className={currentMessage.trim().length >= 300 ? "full" : undefined}>{currentMessage.trim().length}/300</p>
                 <form className="centerX" id="msgInput" onSubmit={handleSubmit}>
                     <textarea name="msg" id="msgBox" placeholder="Type a message..." maxLength="300" value={currentMessage} onInput={(e) => { setCurrentMessage(e.target.value) }}></textarea>
                     <button type="submit" id="sendBtn"><FontAwesomeIcon icon={solid('paper-plane')} /></button>
