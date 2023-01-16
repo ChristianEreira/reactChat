@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { sanitize } from "../../helpers";
 
-const ChatPanel = ({ nicks, activeChat, socket }) => {
+const ChatPanel = ({ nicks, activeChat, socket, messages, addMessage }) => {
     const [currentMessage, setCurrentMessage] = useState("");
 
     const handleSubmit = (e) => {
@@ -15,18 +15,21 @@ const ChatPanel = ({ nicks, activeChat, socket }) => {
         if (message !== "") {
             socket.emit("chat message", sanitize(message), activeChat);
 
-            // TODO: Call add message function
+            addMessage(activeChat, socket.id, message);
             setCurrentMessage("");
         }
     };
+
+    let messagesList = messages[activeChat].length === 0 ? <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p> : messages[activeChat].map((message, index) => {
+        return <ChatMessage nick={nicks[message.id].nick} color={nicks[message.id].color} message={message} own={message.id === socket.id} key={index} />;
+    });
 
     return (
         <div id="chatPanel">
             {activeChat !== "global" && <InfoBar title={nicks[activeChat].nick} avatarColor={nicks[activeChat].color} avatarContent={nicks[activeChat].nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { alert(activeChat) }} />}
             <div id="chatBottom">
                 <div id="messages">
-                    <ChatMessage message={{ msg: ["This is the first message!", "and this is the sencond"] }} />
-                    <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p>
+                    {messagesList}
                 </div>
                 <p id="charCount">{currentMessage.trim().length}/300</p>
                 <form className="centerX" id="msgInput" onSubmit={handleSubmit}>
