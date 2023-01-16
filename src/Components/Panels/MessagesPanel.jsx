@@ -9,7 +9,8 @@ const MessagesPanel = ({openChat, messages, getUserInfo, activeChat, unreadChats
 
     let messagesList;
     if (Object.keys(messages).length > 1) {
-        messagesList = Object.entries(messages).filter(([id, msgs]) => id !== "global").map(([id, msgs]) => {
+        messagesList = Object.entries(messages).filter(([id, msgs]) => id !== "global" && getUserInfo(id).nick.toLowerCase().includes(searchTerm.toLowerCase())).map(([id, msgs]) => {
+
             // TODO: Display last message
             let user = getUserInfo(id);
             return <UserButton avatarColor={user.color} avatarContent={user.nick} title={user.nick} subtext="LAST MESSAGE HERE" unread={unreadChats.has(id)} selected={id === activeChat} hoverable onClick={() => {openChat(id)}} key={id} />;
@@ -22,7 +23,6 @@ const MessagesPanel = ({openChat, messages, getUserInfo, activeChat, unreadChats
         <div id="messagesMenu">
             <h1>Messages</h1>
             <SearchBar setSearchTerm={setSearchTerm} />
-            {searchTerm}
             <UserButton avatarColor="grey" avatarContent={<FontAwesomeIcon icon={solid('users')} />} title="Global chat" subtext="Chat with all users" unread={unreadChats.has("global")} selected={activeChat === "global"} hoverable onClick={() => {openChat('global')}} />
             <hr className="seperator" />
             <div id="messagesList">
