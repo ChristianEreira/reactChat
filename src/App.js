@@ -18,6 +18,7 @@ const App = () => {
   const [nicks, setNicks] = useState({});
   const [messages, setMessages] = useState({ global: [] });
   const [activeChat, setActiveChat] = useState("global");
+  const [unreadChats, setUnreadChats] = useState(new Set());
 
   const openPopup = (popup) => {
     setPopupsShown(popups => [...popups, popup]);
@@ -31,9 +32,30 @@ const App = () => {
     if (!(chat in messages)) {
       setMessages(messages => ({ ...messages, [chat]: [] }));
     }
-    // Else remove id from unread chats
+
+    setUnreadChats(unreadChats => new Set([...unreadChats].filter(x => (x !== chat))));
 
     setActiveChat(chat);
+  };
+
+  const addMessage = (chat, id, msg) => {
+    setMessages(messages => {
+        let newMessages = { ...messages };
+
+        if (!(chat in newMessages)) {
+          newMessages[chat] = [];
+        }
+
+        // Add to messages array if already exists
+        if (newMessages[chat].length > 0 && newMessages[chat][newMessages[chat].length - 1].id === id) {
+          newMessages[chat][newMessages[chat].length - 1].msg.push(msg);
+        } else {
+          newMessages[chat].push({ id: id, msg: [msg] });
+        }
+
+        return newMessages;
+      });
+      console.log(messages);
   };
 
   useEffect(() => {
@@ -75,6 +97,13 @@ const App = () => {
         return newNicks;
       });
     });
+
+    socket.on("chat message", (id, msg, target) => {
+      let chat = target === "global" ? "global" : id;
+      addMessage(chat, id, msg);
+
+      setUnreadChats(unreadChats => new Set([...unreadChats, chat]));
+    });
   }, []);
 
   return (
@@ -83,7 +112,7 @@ const App = () => {
         <div className="centerX">
 
           <div className="box" id="usersBox">
-            <UserPanel nicks={nicks} socket={socket} openChat={openChat}/>
+            <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
           </div>
 
           <div className="centerY">
@@ -97,7 +126,7 @@ const App = () => {
             <div className="box" id="messagesBox">
               <div className="centerX">
                 <MessagesPanel openChat={openChat} messages={messages} nicks={nicks} activeChat={activeChat} />
-                <ChatPanel nicks={nicks} activeChat={activeChat} socket={socket} />
+                <ChatPanel nicks={nicks} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} />
               </div>
             </div>
           </div>
