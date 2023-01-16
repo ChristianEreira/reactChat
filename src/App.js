@@ -57,7 +57,7 @@ const App = () => {
       return newMessages;
     });
   };
-  
+
   const getUserInfo = (id) => {
     return {
       nick: id in nicks ? nicks[id].nick : <s>Disconnected</s>,
@@ -130,6 +130,18 @@ const App = () => {
     }
   }, [timedOutCount]);
 
+  useEffect(() => {
+    if (unreadChats.has(activeChat)) {
+      setUnreadChats(unreadChats => new Set([...unreadChats].filter(x => (x !== activeChat))));
+    }
+
+    if (unreadChats.size > 0) {
+      document.title = `(${unreadChats.size}) Chat`;
+    } else {
+      document.title = "Chat";
+    }
+  }, [unreadChats, activeChat]);
+
   return (
     <div className="App">
       <div className="center" id="content">
@@ -149,7 +161,7 @@ const App = () => {
 
             <div className="box" id="messagesBox">
               <div className="centerX">
-                <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} />
+                <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} />
                 <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} />
               </div>
             </div>
