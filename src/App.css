@@ -654,4 +654,11 @@ button {
   color: #660000;
   border-color: #660000;
 }
+
+.button.full {
+  margin: 0 0 16px 0 !important;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
 /*# sourceMappingURL=App.css.map */

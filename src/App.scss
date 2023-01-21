@@ -536,4 +536,11 @@ button {
       border-color: $red;
     }
   }
+
+  &.full {
+    margin: 0 0 16px 0 !important;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+  }
 }
