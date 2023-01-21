@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import AvatarColourPicker from './Components/AvatarColourPicker';
 import UserButton from './Components/UserButton';
 import NicknamePicker from './Components/NicknamePicker';
@@ -128,10 +128,12 @@ const App = () => {
 
     const handleResize = () => {
       if (window.innerWidth < 750) {
+        closePopup("users");
         setAppSize("small");
       } else if (window.innerWidth < 1000) {
         setAppSize("medium");
       } else {
+        closePopup("users");
         setAppSize("large");
       }
     };
@@ -163,49 +165,56 @@ const App = () => {
   }, [unreadChats, activeChat]);
 
   return (
-    <div className="App">
-      <div className="center" id="content">
-        <div className="centerX">
+    <AppSizeContext.Provider value={appSize}>
+      <div className="App">
+        <div className="center" id="content">
+          <div className="centerX">
 
-          {appSize === "large" &&
-            <div className="box" id="usersBox">
-              <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
-            </div>
-          }
-
-          <div className="centerY">
-            <div className="box" id="optionsBox">
-              <div className="spaceX">
-                <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent={nicks[socket.id] ? nicks[socket.id].nick : "..."} title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
-                <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
+            {appSize === "large" &&
+              <div className="box" id="usersBox">
+                <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
               </div>
-            </div>
+            }
 
-            <div className="box" id="messagesBox">
-              <div className="centerX">
-                <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} />
-                <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />
+            <div className="centerY">
+              <div className="box" id="optionsBox">
+                <div className="spaceX">
+                  <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent={nicks[socket.id] ? nicks[socket.id].nick : "..."} title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
+                  <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
+                </div>
+              </div>
+
+              <div className="box" id="messagesBox">
+                <div className="centerX">
+                  <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => {openPopup("users")}} />
+                  <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
-        <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { closePopup("nickname") }} />
-      </Popup>
-      <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
-        <p>Connecting to the server...</p>
-      </Popup>
-      <Popup isOpen={popupsShown.includes("disconnected")} title="Disconnected" >
-        <p>Lost connection to server. Attempting to reconnect...</p>
-      </Popup>
-      <Popup isOpen={popupsShown.includes("timed out")} title="Timed Out" >
-        <p>Please stop typing so fast!</p>
-        <p>You can rejoin the chat in {timedOutCount} seconds.</p>
-      </Popup>
-    </div>
+        <Popup isOpen={popupsShown.includes("users")} >
+          <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
+        </Popup>
+
+        <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >
+          <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { closePopup("nickname") }} />
+        </Popup>
+        <Popup isOpen={popupsShown.includes("connecting")} title="Connecting..." >
+          <p>Connecting to the server...</p>
+        </Popup>
+        <Popup isOpen={popupsShown.includes("disconnected")} title="Disconnected" >
+          <p>Lost connection to server. Attempting to reconnect...</p>
+        </Popup>
+        <Popup isOpen={popupsShown.includes("timed out")} title="Timed Out" >
+          <p>Please stop typing so fast!</p>
+          <p>You can rejoin the chat in {timedOutCount} seconds.</p>
+        </Popup>
+      </div>
+    </AppSizeContext.Provider>
   );
 };
 
+export const AppSizeContext = createContext("large");
 export default App;
