@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppSizeContext } from '../../App';
 import SearchBar from '../SearchBar';
 import UserButton from '../UserButton';
+import InfoBar from '../InfoBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 const UserPanel = ({ nicks, socket, openChat }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const appSize = useContext(AppSizeContext);
 
     let usersList;
     if (Object.keys(nicks).length <= 1) {
@@ -25,7 +30,11 @@ const UserPanel = ({ nicks, socket, openChat }) => {
 
     return (
         <>
-            <h1>Online Users <span>({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span></h1>
+            {appSize === "large" ?
+                <h1>Online Users <span>({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span></h1> :
+                <InfoBar margin leftIcon={<FontAwesomeIcon icon={solid("chevron-left")} />} title={<span>Online Users ({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span>} />
+            }
+
             <SearchBar setSearchTerm={setSearchTerm} />
             <div id="usersList">
                 {usersList}
