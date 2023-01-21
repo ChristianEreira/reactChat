@@ -14,6 +14,7 @@ import io from 'socket.io-client';
 const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
 
 const App = () => {
+  const [appSize, setAppSize] = useState("large");
   const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
   const [nicks, setNicks] = useState({});
   const [messages, setMessages] = useState({ global: [] });
@@ -124,6 +125,19 @@ const App = () => {
       setTimedOutCount(10);
       openPopup("timed out");
     });
+
+    const handleResize = () => {
+      if (window.innerWidth < 750) {
+        setAppSize("small");
+      } else if (window.innerWidth < 1000) {
+        setAppSize("medium");
+      } else {
+        setAppSize("large");
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
   }, []);
 
   useEffect(() => {
@@ -153,9 +167,11 @@ const App = () => {
       <div className="center" id="content">
         <div className="centerX">
 
-          <div className="box" id="usersBox">
-            <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
-          </div>
+          {appSize === "large" &&
+            <div className="box" id="usersBox">
+              <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
+            </div>
+          }
 
           <div className="centerY">
             <div className="box" id="optionsBox">
