@@ -38,6 +38,8 @@ const App = () => {
     setUnreadChats(unreadChats => new Set([...unreadChats].filter(x => (x !== chat))));
 
     setActiveChat(chat);
+
+    closePopup("users");
   };
 
   const deleteChat = (chat) => {
@@ -186,7 +188,7 @@ const App = () => {
 
               <div className="box" id="messagesBox">
                 <div className="centerX">
-                  <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => {openPopup("users")}} />
+                  <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => { openPopup("users") }} />
                   <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />
                 </div>
               </div>
@@ -195,7 +197,7 @@ const App = () => {
         </div>
 
         <Popup isOpen={popupsShown.includes("users")} >
-          <UserPanel nicks={nicks} socket={socket} openChat={openChat} />
+          <UserPanel nicks={nicks} socket={socket} openChat={openChat} handleBackClick={() => { closePopup("users") }} />
         </Popup>
 
         <Popup isOpen={popupsShown.includes("nickname")} title="Choose a Nickname" >

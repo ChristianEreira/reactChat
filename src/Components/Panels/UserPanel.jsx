@@ -6,7 +6,7 @@ import InfoBar from '../InfoBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
-const UserPanel = ({ nicks, socket, openChat }) => {
+const UserPanel = ({ nicks, socket, openChat, handleBackClick }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const appSize = useContext(AppSizeContext);
 
@@ -32,7 +32,7 @@ const UserPanel = ({ nicks, socket, openChat }) => {
         <>
             {appSize === "large" ?
                 <h1>Online Users <span>({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span></h1> :
-                <InfoBar margin leftIcon={<FontAwesomeIcon icon={solid("chevron-left")} />} title={<span>Online Users ({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span>} />
+                <InfoBar margin leftOnClick={handleBackClick} leftIcon={<FontAwesomeIcon icon={solid("chevron-left")} />} title={<span>Online Users ({nicks[socket.id] ? Object.entries(nicks).length - 1 : "..."})</span>} />
             }
 
             <SearchBar setSearchTerm={setSearchTerm} />
