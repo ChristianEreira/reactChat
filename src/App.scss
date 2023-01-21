@@ -325,9 +325,13 @@ button {
     }
   }
 
-  i {
+  svg {
     font-size: 21px;
     cursor: pointer;
+  }
+  
+  &.withMargin {
+    margin-bottom: 16px;
   }
 }
 
@@ -543,4 +547,8 @@ button {
     border-radius: 8px;
     cursor: pointer;
   }
+}
+
+.noMargin {
+  margin: 0 !important;
 }
