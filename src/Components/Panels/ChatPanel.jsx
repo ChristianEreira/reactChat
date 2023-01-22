@@ -37,7 +37,7 @@ const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, dele
     let chatUser = getUserInfo(activeChat);
     return (
         <div id="chatPanel">
-            {(activeChat !== "global" || appSize === "small") && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { deleteChat(activeChat) }} leftIcon={appSize === "small" ? <FontAwesomeIcon icon={solid("chevron-left")} /> : undefined} leftOnClick={handleBack} />}
+            {(activeChat !== "global" || appSize === "small") && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon={activeChat !== "global" && <FontAwesomeIcon icon={solid("trash")} />} rightOnClick={() => { deleteChat(activeChat) }} leftIcon={appSize === "small" ? <FontAwesomeIcon icon={solid("chevron-left")} /> : undefined} leftOnClick={handleBack} />}
             <div id="chatBottom">
                 <div id="messages">
                     {messagesList}
