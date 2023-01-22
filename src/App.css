@@ -30,6 +30,14 @@ body,
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.spaceX svg {
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .centerX {
@@ -287,6 +295,10 @@ button {
   width: 32px;
   height: 32px;
   line-height: 32px;
+}
+
+.avatar.small svg {
+  font-size: 14px !important;
 }
 
 .avatar.small:first-letter {
@@ -668,6 +680,10 @@ button {
 
 .noMargin {
   margin: 0 !important;
+}
+
+.mobileHeading {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 750px) {

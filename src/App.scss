@@ -36,6 +36,12 @@ body,
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+
+  svg {
+    font-size: 24px;
+    cursor: pointer;
+  }
 }
 
 .centerX {
@@ -224,6 +230,10 @@ button {
     width: 32px;
     height: 32px;
     line-height: 32px;
+
+    svg {
+      font-size: 14px !important;
+    }
 
     &:first-letter {
       font-size: 18px !important;
@@ -551,6 +561,10 @@ button {
 
 .noMargin {
   margin: 0 !important;
+}
+
+.mobileHeading {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 750px) {
