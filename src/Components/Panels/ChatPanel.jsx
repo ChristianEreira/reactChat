@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AppSizeContext } from "../../App";
 import ChatMessage from "../ChatMessage";
 import InfoBar from "../InfoBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { sanitize } from "../../helpers";
 
-const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, deleteChat }) => {
+const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, deleteChat, handleBack }) => {
+    const appSize = useContext(AppSizeContext);
     const [currentMessage, setCurrentMessage] = useState("");
 
     const handleSubmit = (e) => {
@@ -35,7 +37,7 @@ const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, dele
     let chatUser = getUserInfo(activeChat);
     return (
         <div id="chatPanel">
-            {activeChat !== "global" && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { deleteChat(activeChat) }} />}
+            {(activeChat !== "global" || appSize === "small") && <InfoBar title={chatUser.nick} avatarColor={chatUser.color} avatarContent={chatUser.nick} rightIcon=<FontAwesomeIcon icon={solid("trash")} /> rightOnClick={() => { deleteChat(activeChat) }} leftIcon={appSize === "small" ? <FontAwesomeIcon icon={solid("chevron-left")} /> : undefined} leftOnClick={handleBack} />}
             <div id="chatBottom">
                 <div id="messages">
                     {messagesList}

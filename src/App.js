@@ -185,7 +185,7 @@ const App = () => {
         mainPanelContent = <UserPanel nicks={nicks} socket={socket} openChat={openChat} handleBackClick={() => { setSmallViewContent("messages") }} />;
         break;
       case "chat":
-        mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />;
+        mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} handleBack={() => {setSmallViewContent("messages")}} />;
         break;
       default:
         console.error("Invalid small view content");
