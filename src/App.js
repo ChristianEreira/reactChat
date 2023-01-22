@@ -75,11 +75,19 @@ const App = () => {
   };
 
   const getUserInfo = (id) => {
-    return {
-      nick: id in nicks ? nicks[id].nick : <s>Disconnected</s>,
-      color: id in nicks ? nicks[id].color : "grey",
-      disconnected: !(id in nicks || id === "global")
-    };
+    if (id === "global") {
+      return {
+        nick: "Global chat",
+        color: "grey",
+        disconnected: false
+      };
+    } else {
+      return {
+        nick: id in nicks ? nicks[id].nick : <s>Disconnected</s>,
+        color: id in nicks ? nicks[id].color : "grey",
+        disconnected: !(id in nicks)
+      };
+    }
   };
 
   useEffect(() => {
@@ -185,7 +193,7 @@ const App = () => {
         mainPanelContent = <UserPanel nicks={nicks} socket={socket} openChat={openChat} handleBackClick={() => { setSmallViewContent("messages") }} />;
         break;
       case "chat":
-        mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} handleBack={() => {setSmallViewContent("messages")}} />;
+        mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} handleBack={() => { setSmallViewContent("messages") }} />;
         break;
       default:
         console.error("Invalid small view content");
