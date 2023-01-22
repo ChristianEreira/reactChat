@@ -26,7 +26,7 @@ const MessagesPanel = ({ openChat, messages, getUserInfo, activeChat, unreadChat
     }
 
     return (
-        <div id="messagesMenu">
+        <div id="messagesMenu" className={appSize === "small" ? "mobile" : undefined}>
             <h1>Messages</h1>
             {appSize !== "large" && <div className="button primary full" onClick={handleNewChatClick}>Message a new user</div>}
             <SearchBar setSearchTerm={setSearchTerm} />

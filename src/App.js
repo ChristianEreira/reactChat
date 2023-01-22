@@ -204,7 +204,7 @@ const App = () => {
     <AppSizeContext.Provider value={appSize}>
       <div className="App">
         <div className="center" id="content">
-          <div className="centerX">
+          <div className={`centerX ${appSize === "small" && "mobile"}`}>
 
             {appSize === "large" &&
               <div className="box" id="usersBox">
@@ -212,7 +212,7 @@ const App = () => {
               </div>
             }
 
-            <div className="centerY">
+            <div className={`centerY ${appSize === "small" && "mobile"}`}>
               <div className="box" id="optionsBox">
                 <div className="spaceX">
                   <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent={nicks[socket.id] ? nicks[socket.id].nick : "..."} title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
@@ -220,7 +220,7 @@ const App = () => {
                 </div>
               </div>
 
-              <div className="box" id="messagesBox">
+              <div className={`box ${appSize === "small" && "mobile"}`} id="messagesBox">
                 {appSize === "small" ?
                   mainPanelContent
                   :

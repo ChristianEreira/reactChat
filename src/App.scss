@@ -42,12 +42,20 @@ body,
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  &.mobile {
+    height: 100%;
+  }
 }
 
 .centerY {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  &.mobile {
+    height: 100%;
+  }
 }
 
 .center {
@@ -277,12 +285,23 @@ button {
 
 #messagesBox {
   flex: 1;
+
+  &.mobile {
+    width: calc(100vw - 128px);
+    max-width: 350px;
+  }
 }
 
 #messagesMenu {
   width: 240px;
   border-right: 1px solid $elem-background;
   padding-right: 16px;
+
+  &.mobile {
+    width: 100%;
+    border-right: none;
+    padding-right: 0;
+  }
 }
 
 #chatPanel {
@@ -292,15 +311,25 @@ button {
   justify-content: flex-end;
   width: 380px;
   height: 488px;
-}
 
-#chatBottom {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
-  margin-left: 16px;
+  #chatBottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    margin-left: 16px;
+  }
+
+  &.mobile {
+    width: auto;
+
+    #chatBottom {
+      margin-left: 0;
+    }
+  }
+
+  
 }
 
 #messages {

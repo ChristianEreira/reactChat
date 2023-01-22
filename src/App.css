@@ -45,6 +45,10 @@ body,
           justify-content: center;
 }
 
+.centerX.mobile {
+  height: 100%;
+}
+
 .centerY {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -56,6 +60,10 @@ body,
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.centerY.mobile {
+  height: 100%;
 }
 
 .center {
@@ -345,10 +353,21 @@ button {
           flex: 1;
 }
 
+#messagesBox.mobile {
+  width: calc(100vw - 128px);
+  max-width: 350px;
+}
+
 #messagesMenu {
   width: 240px;
   border-right: 1px solid #e5e5e5;
   padding-right: 16px;
+}
+
+#messagesMenu.mobile {
+  width: 100%;
+  border-right: none;
+  padding-right: 0;
 }
 
 #chatPanel {
@@ -369,7 +388,7 @@ button {
   height: 488px;
 }
 
-#chatBottom {
+#chatPanel #chatBottom {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -385,6 +404,14 @@ button {
           justify-content: flex-end;
   overflow: hidden;
   margin-left: 16px;
+}
+
+#chatPanel.mobile {
+  width: auto;
+}
+
+#chatPanel.mobile #chatBottom {
+  margin-left: 0;
 }
 
 #messages {
