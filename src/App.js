@@ -15,6 +15,7 @@ const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade:
 
 const App = () => {
   const [appSize, setAppSize] = useState("large");
+  const [smallViewContent, setSmallViewContent] = useState("messages");
   const [popupsShown, setPopupsShown] = useState(["connecting", "nickname"]);
   const [nicks, setNicks] = useState({});
   const [messages, setMessages] = useState({ global: [] });
@@ -40,12 +41,18 @@ const App = () => {
     setActiveChat(chat);
 
     closePopup("users");
+    setSmallViewContent("chat");
   };
 
   const deleteChat = (chat) => {
     setMessages(messages => { let newMessages = { ...messages }; delete newMessages[chat]; return newMessages; });
     setUnreadChats(unreadChats => new Set([...unreadChats].filter(x => (x !== chat))));
-    openChat("global");
+
+    if (appSize === "small") {
+      setSmallViewContent("messages");
+    } else {
+      openChat("global");
+    }
   };
 
   const addMessage = (chat, id, msg) => {
@@ -166,6 +173,25 @@ const App = () => {
     }
   }, [unreadChats, activeChat]);
 
+  let mainPanelContent = null;
+  if (appSize !== "small") {
+    mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />;
+  } else {
+    switch (smallViewContent) {
+      case "messages":
+        mainPanelContent = <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => { setSmallViewContent("users") }} />;
+        break;
+      case "users":
+        mainPanelContent = <UserPanel nicks={nicks} socket={socket} openChat={openChat} handleBackClick={() => { setSmallViewContent("messages") }} />;
+        break;
+      case "chat":
+        mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />;
+        break;
+      default:
+        console.error("Invalid small view content");
+    }
+  }
+
   return (
     <AppSizeContext.Provider value={appSize}>
       <div className="App">
@@ -187,10 +213,14 @@ const App = () => {
               </div>
 
               <div className="box" id="messagesBox">
-                <div className="centerX">
-                  <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => { openPopup("users") }} />
-                  <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} />
-                </div>
+                {appSize === "small" ?
+                  mainPanelContent
+                  :
+                  <div className="centerX">
+                    <MessagesPanel openChat={openChat} messages={messages} getUserInfo={getUserInfo} activeChat={activeChat} unreadChats={unreadChats} handleNewChatClick={() => { openPopup("users") }} />
+                    {mainPanelContent}
+                  </div>
+                }
               </div>
             </div>
           </div>
