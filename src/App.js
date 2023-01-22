@@ -8,6 +8,8 @@ import UserPanel from './Components/Panels/UserPanel';
 import MessagesPanel from './Components/Panels/MessagesPanel';
 import ChatPanel from './Components/Panels/ChatPanel';
 import io from 'socket.io-client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
@@ -204,7 +206,7 @@ const App = () => {
     <AppSizeContext.Provider value={appSize}>
       <div className="App">
         <div className="center" id="content">
-          <div className={`centerX ${appSize === "small" && "mobile"}`}>
+          <div className="centerX">
 
             {appSize === "large" &&
               <div className="box" id="usersBox">
@@ -212,15 +214,19 @@ const App = () => {
               </div>
             }
 
-            <div className={`centerY ${appSize === "small" && "mobile"}`}>
+            <div className="centerY">
               <div className="box" id="optionsBox">
                 <div className="spaceX">
                   <UserButton avatarColor={nicks[socket.id] ? nicks[socket.id].color : "red"} avatarContent={nicks[socket.id] ? nicks[socket.id].nick : "..."} title="Nickname:" subtext={<>{nicks[socket.id] ? nicks[socket.id].nick : "..."} <span className="imitateLink" onClick={() => { openPopup("nickname") }}>(change)</span></>} />
-                  <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
+                  {appSize !== "small" ?
+                    <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
+                    :
+                    <FontAwesomeIcon icon={solid("gear")} />
+                    }
                 </div>
               </div>
 
-              <div className={`box ${appSize === "small" && "mobile"}`} id="messagesBox">
+              <div className="box" id="messagesBox">
                 {appSize === "small" ?
                   mainPanelContent
                   :
