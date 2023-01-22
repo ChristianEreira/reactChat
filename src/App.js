@@ -10,8 +10,7 @@ import ChatPanel from './Components/Panels/ChatPanel';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import InfoBar from './Components/InfoBar';
 
 const socket = io("http://localhost:8080", { transports: ['websocket'], upgrade: false });
 
@@ -197,6 +196,14 @@ const App = () => {
       case "chat":
         mainPanelContent = <ChatPanel getUserInfo={getUserInfo} activeChat={activeChat} socket={socket} messages={messages} addMessage={addMessage} deleteChat={deleteChat} handleBack={() => { setSmallViewContent("messages") }} />;
         break;
+      case "settings":
+        mainPanelContent = <>
+          <InfoBar title="Settings" leftIcon={<FontAwesomeIcon icon={solid("chevron-left")} />} leftOnClick={() => { setSmallViewContent("messages") }} avatarColor="grey" avatarContent={<FontAwesomeIcon icon={solid("gear")} />} />
+          <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} big />
+          <p className="mobileHeading"><b>Nickname:</b></p>
+          <NicknamePicker socket={socket} nicks={nicks} closePopup={() => { setSmallViewContent("messages") }} />
+        </>;
+        break;
       default:
         console.error("Invalid small view content");
     }
@@ -221,8 +228,8 @@ const App = () => {
                   {appSize !== "small" ?
                     <AvatarColourPicker socket={socket} selected={nicks[socket.id] ? nicks[socket.id].color : "red"} />
                     :
-                    <FontAwesomeIcon icon={solid("gear")} />
-                    }
+                    (smallViewContent !== "settings" && <FontAwesomeIcon icon={solid("gear")} onClick={() => { setSmallViewContent("settings") }} />)
+                  }
                 </div>
               </div>
 
