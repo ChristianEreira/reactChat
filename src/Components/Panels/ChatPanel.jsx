@@ -29,7 +29,8 @@ const ChatPanel = ({ getUserInfo, activeChat, socket, messages, addMessage, dele
         }
     };
 
-    let messagesList = messages[activeChat].length === 0 ? <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p> : messages[activeChat].map((message, index) => {
+    let currentMessages = [...messages[activeChat]];
+    let messagesList = currentMessages.length === 0 ? <p className="emptyMessage"><i>There are no messages yet. Say hi!</i></p> : currentMessages.reverse().map((message, index) => {
         let user = getUserInfo(message.id);
         return <ChatMessage nick={user.nick} color={user.color} message={message} own={message.id === socket.id} key={index} />;
     });

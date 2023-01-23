@@ -317,6 +317,8 @@ button {
   padding-top: 8px;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 #infoBar {
